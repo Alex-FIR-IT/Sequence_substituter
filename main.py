@@ -1,4 +1,11 @@
+import logging
+import datetime
 from managers import FileManager
+
+logging.basicConfig(level=logging.ERROR,
+                    filename=f"substitution.ERROR.{datetime.date.today()}.log",
+                    filemode="a",
+                    format="%(asctime)s %(levelname)s %(message)s")
 
 
 def main():
