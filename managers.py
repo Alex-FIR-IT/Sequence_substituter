@@ -7,12 +7,9 @@ from decorators import retry
 
 class FileManager:
 
-    @staticmethod
-    @retry
-    def get_filepath() -> str:
-        """Получает путь до файла, который нужно изменить"""
-
-        filepath = input("Введите путь к файлу: \n> ")
+    def __init__(self, filepath):
+        self.filepath = filepath
+        self.content = self.get_from_txt(filepath=self.filepath)
 
         if not os.path.exists(path=filepath):
             raise FileNotFoundError()
