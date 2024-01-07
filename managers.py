@@ -14,7 +14,34 @@ class FileManager:
         """Сохраняет текст в файл, возвращает текст, записанный в файл"""
 
         with open(file=filepath, mode='w') as file:
-            file.write(text)
+            file.write(self.content)
+
+        return self.content
+
+    def substitute_in_text(self, *, subs_dict: dict) -> str:
+        substituted_content = self.content
+
+        for old_sequence, new_sequence in subs_dict.items():
+            substituted_content = re.sub(pattern=fr"(?<=^|\s){old_sequence}(?=[\s,.!?\'\"]|$)",
+                                         repl=new_sequence,
+                                         string=substituted_content,
+                                         flags=re.IGNORECASE
+                                         )
+
+        if substituted_content == self.content:
+            print('Программа не выполнила ни одной замены!')
+        else:
+            print('Замены успешно выполнены!')
+            self.content = substituted_content
+
+        return self.content
+
+    @staticmethod
+    @retry
+    def get_filepath() -> str:
+        """Получает путь до файла, который нужно изменить"""
+
+        filepath = input("Введите путь к файлу: \n> ")
 
         if not os.path.exists(path=filepath):
             raise FileNotFoundError()
