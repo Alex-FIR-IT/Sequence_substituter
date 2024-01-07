@@ -10,8 +10,11 @@ class FileManager:
         self.content = self.get_from_txt(filepath=filepath)
         self.filepath = filepath
 
-    def save_to_file(self, *, filepath: str = 'result.txt'):
+    def save_to_file(self, *, filepath: str = None):
         """Сохраняет текст в файл, возвращает текст, записанный в файл"""
+
+        if not filepath:
+            filepath = self.filepath
 
         with open(file=filepath, mode='w') as file:
             file.write(self.content)
