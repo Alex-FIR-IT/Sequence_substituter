@@ -18,5 +18,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-    print('Замены выполнены')
+    try:
+        main()
+    except Exception as error:
+        print(f"Программа завершена с ошибкой: \"{error}\"")
+        logging.exception(msg=error, exc_info=True)
