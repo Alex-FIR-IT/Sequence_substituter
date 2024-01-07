@@ -7,8 +7,8 @@ from decorators import retry
 class FileManager:
 
     def __init__(self, filepath):
+        self.content = self.get_from_txt(filepath=filepath)
         self.filepath = filepath
-        self.content = self.get_from_txt(filepath=self.filepath)
 
     def save_to_file(self, *, filepath: str = 'result.txt'):
         """Сохраняет текст в файл, возвращает текст, записанный в файл"""
