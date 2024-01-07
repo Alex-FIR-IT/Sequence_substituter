@@ -56,9 +56,10 @@ class FileManager:
         result_text = initial_text
 
         for old_sequence, new_sequence in subs_dict.items():
-            result_text = re.sub(pattern=old_sequence,
+            result_text = re.sub(pattern=fr"(?<=^|\s){old_sequence}(?=[\s,.!?\'\"]|$)",
                                  repl=new_sequence,
-                                 string=result_text
+                                 string=result_text,
+                                 flags=re.IGNORECASE
                                  )
 
         if result_text == initial_text:
