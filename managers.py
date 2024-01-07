@@ -10,19 +10,16 @@ class FileManager:
         self.filepath = filepath
         self.content = self.get_from_txt(filepath=self.filepath)
 
-        if not os.path.exists(path=filepath):
-            raise FileNotFoundError()
-
-        return filepath
-
-    @staticmethod
-    def save_to_file(*, text: str, filepath: str = 'result.txt'):
+    def save_to_file(self, *, filepath: str = 'result.txt'):
         """Сохраняет текст в файл, возвращает текст, записанный в файл"""
 
         with open(file=filepath, mode='w') as file:
             file.write(text)
 
-        return text
+        if not os.path.exists(path=filepath):
+            raise FileNotFoundError()
+
+        return filepath
 
     @staticmethod
     def get_from_txt(*, filepath: str) -> str:
@@ -37,28 +34,3 @@ class FileManager:
 
         with open(file=filepath, mode='r') as file:
             return json.load(fp=file)
-
-    @staticmethod
-    def write_to_json(*, filepath: str = 'data.json', data_dict: dict) -> dict:
-        """Записывает словарь в json формат, возвращает записанный словарь"""
-
-        with open(file=filepath, mode='w') as file:
-            json.dump(obj=data_dict, fp=file, ensure_ascii=False, indent=4)
-
-        return data_dict
-
-    @staticmethod
-    def get_text_after_substitution(*, initial_text: str, subs_dict: dict) -> str:
-        result_text = initial_text
-
-        for old_sequence, new_sequence in subs_dict.items():
-            result_text = re.sub(pattern=fr"(?<=^|\s){old_sequence}(?=[\s,.!?\'\"]|$)",
-                                 repl=new_sequence,
-                                 string=result_text,
-                                 flags=re.IGNORECASE
-                                 )
-
-        if result_text == initial_text:
-            print('Программа не выполнила ни одной замены!')
-
-        return result_text
