@@ -1,13 +1,23 @@
 import json
+import os
+import re
+
+from decorators import retry
 
 
 class FileManager:
 
     @staticmethod
+    @retry
     def get_filepath() -> str:
         """Получает путь до файла, который нужно изменить"""
 
-        return input("Введите путь к файлу: \n> ")
+        filepath = input("Введите путь к файлу: \n> ")
+
+        if not os.path.exists(path=filepath):
+            raise FileNotFoundError()
+
+        return filepath
 
     @staticmethod
     def save_to_file(*, text: str, filepath: str = 'result.txt'):
@@ -24,7 +34,7 @@ class FileManager:
 
         with open(file=filepath, mode='r') as file:
             return file.read()
-        
+
     @staticmethod
     def get_from_json(*, filepath: str = 'data.json') -> dict:
         """Читает данные из json, возвращая его содержимое в виде словаря"""
