@@ -25,7 +25,9 @@ class FileManager:
         substituted_content = self.content
 
         for old_sequence, new_sequence in subs_dict.items():
-            substituted_content = re.sub(pattern=fr"(?<=^|\s){old_sequence}(?=[\s,.!?\'\"]|$)",
+            substituted_content = re.sub(pattern=fr"(?:(?<=^)|(?<=\s)"
+                                                 fr"{old_sequence}"
+                                                 fr"(?=[\s,.!?\'\"]|$)",
                                          repl=new_sequence,
                                          string=substituted_content,
                                          flags=re.IGNORECASE
