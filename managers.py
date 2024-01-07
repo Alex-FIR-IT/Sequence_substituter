@@ -27,7 +27,7 @@ class FileManager:
 
     @staticmethod
     def get_from_txt(*, filepath: str) -> str:
-        """Чатает данные из txt, возвращает его содержимое"""
+        """Считывает данные из txt, возвращает его содержимое"""
 
         with open(file=filepath, mode='r') as file:
             return file.read()
