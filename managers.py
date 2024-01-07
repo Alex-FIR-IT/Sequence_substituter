@@ -50,3 +50,18 @@ class FileManager:
             json.dump(obj=data_dict, fp=file, ensure_ascii=False, indent=4)
 
         return data_dict
+
+    @staticmethod
+    def get_text_after_substitution(*, initial_text: str, subs_dict: dict) -> str:
+        result_text = initial_text
+
+        for old_sequence, new_sequence in subs_dict.items():
+            result_text = re.sub(pattern=old_sequence,
+                                 repl=new_sequence,
+                                 string=result_text
+                                 )
+
+        if result_text == initial_text:
+            print('Программа не выполнила ни одной замены!')
+
+        return result_text
